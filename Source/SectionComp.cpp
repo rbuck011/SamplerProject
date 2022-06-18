@@ -16,28 +16,8 @@ int SectionComp::counter = 0;
 
 SectionComp::SectionComp(NewProjectAudioProcessor& p):
                              audioProcessor(p),
-                             _Wave(p,counter),
-                             AttackSlider(new Slider("ATTACK")),
-                             DecaySlider(new Slider("DECAY")),
-                             SustainSlider(new Slider("SUSTAIN")),
-                             ReleaseSlider(new Slider("RELEASE")),
-                             CutOffSlider(new Slider("CUTOFF")),
-                             ResSlider(new Slider("RESONANCE")),
-                             ChooseFilter(new ComboBox("FILTERCHOICE")),
-                             AttackAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("ATTACK"+String(counter)), *AttackSlider)),
-                             DecayAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("DECAY"+String(counter)), *DecaySlider)),
-                             SustainAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("SUSTAIN"+String(counter)), *SustainSlider)),
-                             ReleaseAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("RELEASE"+String(counter)), *ReleaseSlider)),
-                             FilterTypeAttachment(new AudioProcessorValueTreeState::ComboBoxAttachment
-                             (audioProcessor.getValueTree(), String("FILTERCHOICE"+String(counter)), *ChooseFilter)),
-                             CutOffAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("CUTOFF"+String(counter)), *CutOffSlider)),
-                             ResAttachment(new AudioProcessorValueTreeState::SliderAttachment
-                             (audioProcessor.getValueTree(), String("RESONANCE"+String(counter)), *ResSlider))
+                             _Wave(p,counter)
+            
                              
                                                        
 {

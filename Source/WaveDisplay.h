@@ -23,7 +23,7 @@ class WaveDisplay  : public Component,
                      public ValueTree::Listener
 {
 public:
-    WaveDisplay(NewProjectAudioProcessor& p, int i);
+    WaveDisplay(NewProjectAudioProcessor& p);
     ~WaveDisplay() override;
 
     //==============================================================================

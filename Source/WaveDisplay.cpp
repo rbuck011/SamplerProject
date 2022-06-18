@@ -11,7 +11,7 @@
 #include "WaveDisplay.h"
 
 //==============================================================================
-WaveDisplay::WaveDisplay(NewProjectAudioProcessor& p, int i) : audioProcessor (p), index(i)
+WaveDisplay::WaveDisplay(NewProjectAudioProcessor& p) : audioProcessor(p)
 {
     
     

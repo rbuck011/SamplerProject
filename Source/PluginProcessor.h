@@ -12,8 +12,6 @@
 #include <JuceHeader.h>
 #include "MySamplerSound.h"
 #include "MySamplerVoice.h"
-#include "SampleInstance.h"
-//#include "WaveSamplerData.h"
 //==============================================================================
 /**
 */

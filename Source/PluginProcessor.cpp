@@ -9,8 +9,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-static String doubleToString(double val) { return String(val); }
-static double stringToDouble(String s){return std::stod(s.toStdString());}
 
 //==============================================================================
 NewProjectAudioProcessor::NewProjectAudioProcessor()
@@ -28,38 +26,14 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                         
 #endif
 {
-//    mySampler.setup();
-    
-    
-    using Parameter = AudioProcessorValueTreeState::Parameter;
 
-    for(int i = 0; i < mySampler.getNumVoices(); i++){
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("ATTACK" + String(i)), "Attack","", juce::NormalisableRange<float> (100.0f, 500.0f), 0.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("DECAY"+ String(i)), "Decay","", juce::NormalisableRange<float> (0.0f, 1000.0f), 0.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("SUSTAIN"+ String(i)), "Sustain","", juce::NormalisableRange<float>(0.0f, 500.0f), 0.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("RELEASE"+String(i)), "Release","", juce::NormalisableRange<float> (0.0f, 5000.0f), 1000.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("FILTERCHOICE"+String(i)), "Type","", juce::NormalisableRange<float> (0.0f, 5000.0f), 1000.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("CUTOFF"+String(i)), "Cutoff","", juce::NormalisableRange<float> (0.0f, 5000.0f), 1000.0f, doubleToString, stringToDouble));
-        APVTS->createAndAddParameter(std::make_unique<Parameter>(String("RESONANCE"+String(i)), "Resonance","", juce::NormalisableRange<float> (0.0f, 5000.0f), 1000.0f, doubleToString, stringToDouble));
-        
-         if(auto* voice = dynamic_cast<MySamplerVoice*>(mySampler.getVoice(i))){
-            APVTS->addParameterListener(String("ATTACK" + String(i)),voice);
-            APVTS->addParameterListener(String("DECAY" + String(i)),voice);
-            APVTS->addParameterListener(String("SUSTAIN" + String(i)),voice);
-            APVTS->addParameterListener(String("RELEASE" + String(i)),voice);
-            APVTS->addParameterListener(String("FILTERCHOICE" + String(i)),voice);
-            APVTS->addParameterListener(String("CUTOFF" + String(i)),voice);
-            APVTS->addParameterListener(String("RESONANCE" + String(i)),voice);
-            }
-        
-    }
-    APVTS->state = ValueTree("PARAMETERS");
+    
 }
 
 NewProjectAudioProcessor::~NewProjectAudioProcessor()
 {
-//    FormatReader = nullptr;
-//    APVTS.state.removeListener(this);
+    FormatReader = nullptr;
+    APVTS.state.removeListener(this);
 }
 
 //==============================================================================
@@ -281,14 +255,14 @@ void NewProjectAudioProcessor::valueTreePropertyChanged (ValueTree &treeWhosePro
 
 
 void NewProjectAudioProcessor::updateADSR(const float attack, const float decay, const float sustain, const float release){
-//    adsrData.update(attack,decay,sustain,release);
+    adsrData.update(attack,decay,sustain,release);
 }
 
 
 
 void NewProjectAudioProcessor::setType(const int filtertype, const float cutoff, const float res){
      
-//    filterData.setParams(filtertype, cutoff, res);
+    filterData.setParams(filtertype, cutoff, res);
   
 }
 
