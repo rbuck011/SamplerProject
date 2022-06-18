@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="jjR7ZG" name="NewProject" projectType="audioplug" addUsingNamespaceToJuceHeader="1"
+              displaySplashScreen="1" jucerFormatVersion="1" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              useAppConfig="0" defines="JUCE_MODAL_LOOPS_PERMITTED=1" pluginFormats="buildAU,buildVST3"
+              pluginVST3Category="Instrument,Synth" pluginCode="Rijy">
+  <MAINGROUP id="p6UnvX" name="NewProject">
+    <GROUP id="{384D9C56-C354-4626-3A74-51D701EF7764}" name="Source">
+      <FILE id="u9tW7E" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="N9yzk3" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="wtgFmz" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="uIqoVq" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="msIBko" name="SectionComp.cpp" compile="1" resource="0" file="Source/SectionComp.cpp"/>
+      <FILE id="QDcyln" name="SectionComp.h" compile="0" resource="0" file="Source/SectionComp.h"/>
+      <FILE id="UHo9ww" name="WaveDisplay.cpp" compile="1" resource="0" file="Source/WaveDisplay.cpp"/>
+      <FILE id="Nf8wAk" name="WaveDisplay.h" compile="0" resource="0" file="Source/WaveDisplay.h"/>
+      <FILE id="kiMJ7W" name="Mainbit.cpp" compile="1" resource="0" file="Source/Mainbit.cpp"/>
+      <FILE id="i0zy46" name="Mainbit.h" compile="0" resource="0" file="Source/Mainbit.h"/>
+      <GROUP id="{D2A5F7A0-3BC4-A1CE-2109-5D7E3001E0AD}" name="UI"/>
+      <GROUP id="{17416929-50AB-B79A-8BF4-AFC928FA3303}" name="Data">
+        <FILE id="rUtBRs" name="ADSRdata.cpp" compile="1" resource="0" file="Source/ADSRdata.cpp"/>
+        <FILE id="uQyhA6" name="ADSRdata.h" compile="0" resource="0" file="Source/ADSRdata.h"/>
+        <FILE id="BdAomK" name="FilterData.cpp" compile="1" resource="0" file="Source/FilterData.cpp"/>
+        <FILE id="wgc86Z" name="FilterData.h" compile="0" resource="0" file="Source/FilterData.h"/>
+        <FILE id="ojbNhD" name="MySamplerSound.cpp" compile="1" resource="0"
+              file="Source/MySamplerSound.cpp"/>
+        <FILE id="AUohu9" name="MySamplerSound.h" compile="0" resource="0"
+              file="Source/MySamplerSound.h"/>
+        <FILE id="kkOlPU" name="MySamplerVoice.cpp" compile="1" resource="0"
+              file="Source/MySamplerVoice.cpp"/>
+        <FILE id="LJ6EyL" name="MySamplerVoice.h" compile="0" resource="0"
+              file="Source/MySamplerVoice.h"/>
+        <FILE id="KBLBGY" name="SampleInstance.cpp" compile="1" resource="0"
+              file="Source/SampleInstance.cpp"/>
+        <FILE id="nyGVoD" name="SampleInstance.h" compile="0" resource="0"
+              file="Source/SampleInstance.h"/>
+        <FILE id="PeOv2z" name="GetFile.cpp" compile="1" resource="0" file="Source/GetFile.cpp"/>
+        <FILE id="Ou3hFv" name="GetFile.h" compile="0" resource="0" file="Source/GetFile.h"/>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="NewProject" osxArchitecture="64BitIntel"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="NewProject" osxArchitecture="64BitIntel"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../Applications/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../../../Applications/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
