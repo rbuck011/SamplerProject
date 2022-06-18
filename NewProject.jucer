@@ -33,12 +33,6 @@
               file="Source/MySamplerVoice.cpp"/>
         <FILE id="LJ6EyL" name="MySamplerVoice.h" compile="0" resource="0"
               file="Source/MySamplerVoice.h"/>
-        <FILE id="KBLBGY" name="SampleInstance.cpp" compile="1" resource="0"
-              file="Source/SampleInstance.cpp"/>
-        <FILE id="nyGVoD" name="SampleInstance.h" compile="0" resource="0"
-              file="Source/SampleInstance.h"/>
-        <FILE id="PeOv2z" name="GetFile.cpp" compile="1" resource="0" file="Source/GetFile.cpp"/>
-        <FILE id="Ou3hFv" name="GetFile.h" compile="0" resource="0" file="Source/GetFile.h"/>
       </GROUP>
     </GROUP>
   </MAINGROUP>
