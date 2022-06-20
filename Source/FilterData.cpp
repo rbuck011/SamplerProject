@@ -18,10 +18,10 @@ FilterData::FilterData()
 void FilterData::SetType (const int filterType){
     selectFilterType (filterType);
 }
-void FilterData:: setCutoff(const float filterCutoff){
+void FilterData::setCutoff(const float filterCutoff){
     setCutoffFrequency (filterCutoff);
 }
-void FilterData:: setRes(const float filterResonance){
+void FilterData::setRes(const float filterResonance){
     setResonance (filterResonance);
 }
 

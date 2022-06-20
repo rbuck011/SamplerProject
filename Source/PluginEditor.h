@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Mainbit.h"
+#include "SectionComp.h"
+#include "WaveDisplay.h"
 
 
 
@@ -39,6 +41,7 @@ private:
     
     NewProjectAudioProcessor& audioProcessor;
     Mainbit _main;
+    
     
     
     

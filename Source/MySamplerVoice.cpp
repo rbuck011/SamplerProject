@@ -20,8 +20,8 @@ void MySamplerVoice::startNote (int midiNoteNumber, float velocity,SynthesiserSo
 
     if (auto* sound = dynamic_cast<MySamplerSound*> (s))
     {
-        pitchRatio = std::pow (2.0, (midiNoteNumber - sound->getmidiRootNote()) / 12.0)
-                        * sound->getsourceSampleRate() / getSampleRate();
+//        pitchRatio = std::pow (2.0, (midiNoteNumber - sound->getmidiRootNote()) / 12.0)
+//                        * sound->getsourceSampleRate() / getSampleRate();
 
         sourceSamplePosition = 0.0;
         lgain = velocity;
@@ -196,32 +196,32 @@ void MySamplerVoice::updateRes( const float res){
 
 void MySamplerVoice::parameterChanged(const String &parameterID, float newValue){
     
-    if (parameterID == String("ATTACK" + String(index)))
+    if (parameterID == String("ATTACK"))
         {
             updateAttack(newValue);
            
         }
-    if (parameterID == String("DECAY" + String(index)))
+    if (parameterID == String("DECAY"))
         {
             updateDecay(newValue);
         }
-    if (parameterID == String("SUSTAIN" + String(index)))
+    if (parameterID == String("SUSTAIN"))
         {
             updateSustain(newValue);
         }
-    if (parameterID == String("RELEASE" + String(index)))
+    if (parameterID == String("RELEASE"))
         {
             updateRelease(newValue);
         }
-    if (parameterID == String("FILTERCHOICE" + String(index)))
+    if (parameterID == String("FILTERCHOICE"))
         {
             updateType(newValue);
         }
-    if (parameterID == String("CUTOFF" + String(index)))
+    if (parameterID == String("CUTOFF"))
         {
             updateCutoff(newValue);
         }
-    if (parameterID == String("RES" + String(index)))
+    if (parameterID == String("RES"))
         {
             updateRes(newValue);
         }

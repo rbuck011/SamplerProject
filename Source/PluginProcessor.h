@@ -15,9 +15,7 @@
 //==============================================================================
 /**
 */
-class NewProjectAudioProcessor  : public AudioProcessor,
-                                  public ValueTree::Listener
-            
+class NewProjectAudioProcessor  : public AudioProcessor
 {
 public:
     //==============================================================================
@@ -60,49 +58,39 @@ public:
     
     
     
-//    void loadFile();
-//    void loadFile(const String& path);
-//    get audio info, if the sound is playing
-    int getSamplerSounds(){return mySampler.getNumSounds();}
-   
+    void loadFile();
+    void loadFile(const String& path);
     
-//    
-//    AudioBuffer<float>& getWaveform();
+    
+    
+    int getSamplerSounds(){return mySampler.getNumSounds();}
+
     void updateADSR(const float attack, const float decay, const float sustain, const float release);
     void setType(const int filtertype, const float cutoff, const float res);
     void updateADSRParams();
     void updateFilterParams();
     void updateParams();
-//    void loadFile();
-//    void loadFile(const String &path);
- 
-//
-//    Synthesiser Samp;
+    
    
-//    AudioBuffer<float>&getWaveform();
-    AudioProcessorValueTreeState& getValueTree(){return *APVTS;}
-    std::unique_ptr<UndoManager> undoManager;
-    std::unique_ptr<AudioProcessorValueTreeState> APVTS;
+    AudioBuffer<float>&getWaveForm();
+    AudioProcessorValueTreeState& getValueTree(){return APVTS;}
+    juce::AudioProcessorValueTreeState APVTS;
     
-//    SampleInstance& getSampler() {return mySampler;}
+    
 private:
-    
-    
-    SampleInstance mySampler;
+    Synthesiser mySampler;
     const int NumVoices {3};
+    
     ADSRdata adsrData;
     FilterData filterData;
     
     
-//    AudioFormatManager FormatManager;
-//    AudioFormatReader* FormatReader{nullptr};
+    AudioFormatManager FormatManager;
+    AudioFormatReader* FormatReader{nullptr};
     
+    AudioProcessorValueTreeState::ParameterLayout ParamLayout();
+//    void valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged,const Identifier& property)override;
 
-    
-//    
-//    AudioProcessorValueTreeState::ParameterLayout ParamLayout();
-    void valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged,const Identifier& property)override;
-//
     std::atomic<bool> ShouldUpdate {false};
 
 

@@ -30,7 +30,7 @@ void WaveDisplay ::paint (juce::Graphics& g)
     
     g.fillAll(Colours::azure.darker());
     
-    auto waveform = _sample.getWaveform();
+    auto waveform = audioProcessor.getWaveForm();
     
     if(waveform.getNumSamples() > 0)
     {
@@ -106,10 +106,7 @@ void WaveDisplay::filesDropped(const StringArray& files,
             
             auto myFile = std::make_unique<File>(file);
             FileName = myFile->getFileNameWithoutExtension();
-         
-            renameFile(file, "Sample_");
-
-            _sample.settPath(file + String(index));
+            audioProcessor.loadFile (file);
           }
     }
     repaint();

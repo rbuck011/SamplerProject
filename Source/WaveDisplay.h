@@ -12,7 +12,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "SampleInstance.h"
+
 
 
 //==============================================================================
@@ -36,19 +36,13 @@ public:
     bool renameFile (const File& f, const String& newName)  { return f.moveFileTo (f.getSiblingFile(newName));}
 
 private:
- 
-    friend class SampleInstance;
+
     
     std::vector<float>AudioPoints;
     bool ShouldbePaining{false};
     String FileName{""};
     
     NewProjectAudioProcessor& audioProcessor;
-    int index;
     
-    SampleInstance _sample;
-    
-//    getFile __sample; 
-//    StringArray instruments;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WaveDisplay)
 };

@@ -18,7 +18,7 @@ class MySamplerVoice : public SamplerVoice, public AudioProcessorValueTreeState:
                       
 {
 public:
-    MySamplerVoice(int i) : index(i)
+    MySamplerVoice()
     {};
     bool canPlaySound (SynthesiserSound* sound) override;
     void startNote (int midiNoteNumber, float velocity, juce::SynthesiserSound*, int currentPitchWheelPosition) override;
@@ -63,10 +63,6 @@ private:
     double sourceSamplePosition = 0;
     float lgain = 0, rgain = 0;
     FilterData filter;
-//    std::array<FilterData, numChannelsToProcess> filter;
-    
-   
-    
 
     JUCE_LEAK_DETECTOR (MySamplerVoice)
 };

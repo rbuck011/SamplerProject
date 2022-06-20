@@ -15,8 +15,9 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor(NewProjectAudioPr
       audioProcessor(p),
       _main(p)
 {
-
+ 
     addAndMakeVisible(_main);
+    
    
     startTimerHz (30);
     setSize(1000, 800);
@@ -46,6 +47,7 @@ void NewProjectAudioProcessorEditor::resized()
 
      auto r = getLocalBounds();
     _main.setBounds(r);
+    
 }
 
 void NewProjectAudioProcessorEditor::timerCallback()

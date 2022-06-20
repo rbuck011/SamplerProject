@@ -20,20 +20,25 @@ NewProjectAudioProcessor::NewProjectAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ),undoManager(new UndoManager())
-                         ,APVTS(new AudioProcessorValueTreeState(*this,undoManager.get()))
+                       ),APVTS(*this, nullptr, "PARAMETERS",ParamLayout())
                    
                         
 #endif
 {
-
+        FormatManager.registerBasicFormats();
+      
+          
+//        mySampler.addSound (new SamplerSound());
+        for (int i = 0; i < NumVoices; i++)
+        {
+            mySampler.addVoice (new MySamplerVoice());
+        }
     
 }
 
 NewProjectAudioProcessor::~NewProjectAudioProcessor()
 {
-    FormatReader = nullptr;
-    APVTS.state.removeListener(this);
+    
 }
 
 //==============================================================================
@@ -176,7 +181,7 @@ void NewProjectAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
        MemoryOutputStream stream(destData, false);
-        APVTS->state.writeToStream(stream);
+        APVTS.state.writeToStream(stream);
 }
 
 void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -188,7 +193,7 @@ void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeIn
     {
         if(tree.hasType("PARAMETERS"))
         {
-            APVTS->state = tree;
+            APVTS.state = tree;
         }
     }
     
@@ -197,7 +202,7 @@ void NewProjectAudioProcessor::setStateInformation (const void* data, int sizeIn
 
 void NewProjectAudioProcessor::updateParams(){
     updateADSRParams();
-//    updateFilterParams();
+    updateFilterParams();
 }
 
 
@@ -212,10 +217,10 @@ void NewProjectAudioProcessor::updateADSRParams()
 
         if(auto voice = dynamic_cast<MySamplerVoice*>(mySampler.getVoice(i))){
 
-            auto& attack = *APVTS->getRawParameterValue("ATTACK"+String(i));
-            auto& decay = *APVTS->getRawParameterValue("DECAY"+String(i));
-            auto& sustain = *APVTS->getRawParameterValue("SUSTAIN"+String(i));
-            auto& release = *APVTS->getRawParameterValue("RELEASE"+String(i));
+            auto& attack = *APVTS.getRawParameterValue("ATTACK");
+            auto& decay = *APVTS.getRawParameterValue("DECAY");
+            auto& sustain = *APVTS.getRawParameterValue("SUSTAIN");
+            auto& release = *APVTS.getRawParameterValue("RELEASE");
 
             voice->updateAttack(attack.load());
             voice->updateDecay(decay.load());
@@ -235,9 +240,9 @@ void NewProjectAudioProcessor::updateFilterParams(){
 
         if(auto voice = dynamic_cast<MySamplerVoice*>(mySampler.getVoice(i))){
 
-           auto& filterchoice = *APVTS->getRawParameterValue("FILTERCHOICE"+String(i));
-            auto& freq = *APVTS->getRawParameterValue("CUTOFF"+String(i));
-            auto& res = *APVTS->getRawParameterValue("RESONANCE"+String(i));
+           auto& filterchoice = *APVTS.getRawParameterValue("FILTERCHOICE"+String(i));
+            auto& freq = *APVTS.getRawParameterValue("CUTOFF"+String(i));
+            auto& res = *APVTS.getRawParameterValue("RESONANCE"+String(i));
     
             voice->updateType(filterchoice.load());
             voice->updateCutoff(freq.load());
@@ -248,21 +253,101 @@ void NewProjectAudioProcessor::updateFilterParams(){
   }
             
 }
-void NewProjectAudioProcessor::valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged, const Identifier &property)
+
+
+void NewProjectAudioProcessor::loadFile()
 {
-    ShouldUpdate = true;
+    mySampler.clearSounds();
+    
+    FileChooser chooser { "Please load a file" };
+    
+    if (chooser.browseForFileToOpen())
+    {
+        auto file = chooser.getResult();
+        // the reader can be a local variable here since it's not needed by the SamplerSound after this
+        std::unique_ptr<AudioFormatReader> reader{ FormatManager.createReaderFor(file) };
+        if (reader)
+        {
+            BigInteger range;
+            range.setRange(0, 128, true);
+            mySampler.addSound(new MySamplerSound("Sample", *reader, range, 60, 0.1, 0.1, 10.0));
+        }
+        
+    }
+    
+    
+}
+
+void NewProjectAudioProcessor::loadFile (const String& path)
+{
+    mySampler.clearSounds();
+    
+    auto file = File (path);
+    // the reader can be a local variable here since it's not needed by the other classes after this
+    std::unique_ptr<AudioFormatReader> reader{FormatManager.createReaderFor(file) };
+    if (reader)
+    {
+        BigInteger range;
+        range.setRange(0, 128, true);
+        mySampler.addSound(new MySamplerSound("Sample", *reader, range, 60, 0.1, 0.1, 10.0));
+//        updateADSR();
+    }
+    
+}
+
+AudioBuffer<float>& NewProjectAudioProcessor::getWaveForm()
+{
+    // get the last added synth sound as a SamplerSound*
+    auto sound = dynamic_cast<MySamplerSound*>(mySampler.getSound(mySampler.getNumSounds() - 1).get());
+    if (sound)
+    {
+        return *sound->getAudioData();
+    }
+    // just in case it somehow happens that the sound doesn't exist or isn't a SamplerSound,
+    // return a static instance of an empty AudioBuffer here...
+    static AudioBuffer<float> dummybuffer;
+    return dummybuffer;
 }
 
 
+AudioProcessorValueTreeState::ParameterLayout NewProjectAudioProcessor::ParamLayout()
+{
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
+    
+    params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.0f, 5.0f, 0.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 0.0f, 5.0f, 2.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 0.0f));
+    
+    return { params.begin(), params.end() };
+}
+
+
+
+
+
+
+
+//void NewProjectAudioProcessor::valueTreePropertyChanged (ValueTree &treeWhosePropertyHasChanged, const Identifier &property)
+//{
+//    ShouldUpdate = true;
+//}
+
+
 void NewProjectAudioProcessor::updateADSR(const float attack, const float decay, const float sustain, const float release){
-    adsrData.update(attack,decay,sustain,release);
+    adsrData.updateAttack(attack);
+    adsrData.updateDecay(decay);
+    adsrData.updateSustain(sustain);
+    adsrData.updateRelease(release);
 }
 
 
 
 void NewProjectAudioProcessor::setType(const int filtertype, const float cutoff, const float res){
      
-    filterData.setParams(filtertype, cutoff, res);
+    filterData.SetType(filtertype);
+    filterData.setCutoff(cutoff);
+    filterData.setRes(res);
   
 }
 
